@@ -31,19 +31,7 @@ public class Autos {
         carro.writeInt(b);
     }
     
-    public boolean searchNum(int identify) throws IOException{
-        carro.seek(0);
-        while(carro.getFilePointer()<carro.length()){
-            int num = carro.readInt();
-            carro.readUTF();
-            carro.readUTF();
-            carro.skipBytes(12);
-            if(num==identify){
-                return true;
-            }
-        }
-        return false;
-    }
+   
     
     public int searchType() throws IOException{
         carro.seek(0);
@@ -63,5 +51,18 @@ public class Autos {
         return 0;
     }
     
+     public boolean searchNum(int i) throws IOException{
+        carro.seek(0);
+        while(carro.getFilePointer()<carro.length()){
+            int num = carro.readInt();
+            carro.readUTF();
+            carro.readUTF();
+            carro.skipBytes(12);
+            if(num==i){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

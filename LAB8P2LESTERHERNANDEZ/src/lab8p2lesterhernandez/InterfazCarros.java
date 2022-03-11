@@ -1,8 +1,11 @@
 package lab8p2lesterhernandez;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JColorChooser;
@@ -11,17 +14,20 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author leste
+ * @author Daniel
  */
 public class InterfazCarros extends javax.swing.JFrame {
+
     private Color col;
     private String pista;
     private long distance;
+
     public InterfazCarros() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarComboCox();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +65,11 @@ public class InterfazCarros extends javax.swing.JFrame {
         Pause_bt.setText("Pausar");
 
         Start_bt.setText("Comenzar");
+        Start_bt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Start_btActionPerformed(evt);
+            }
+        });
 
         pista_lb.setText("Pista: ____");
 
@@ -72,6 +83,11 @@ public class InterfazCarros extends javax.swing.JFrame {
                 "Identificador", "Corredor", "Distancia"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         Add_bt.setText("Agregar");
@@ -127,61 +143,55 @@ public class InterfazCarros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(166, 166, 166)
-                        .addComponent(Pause_bt)
-                        .addGap(105, 105, 105)
+                        .addComponent(Pause_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
                         .addComponent(pista_lb)
                         .addGap(81, 81, 81)
                         .addComponent(largo_lb))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(Carros_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(Add_bt))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(Type_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(50, 50, 50)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(save_bt, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                                        .addComponent(Color_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                    .addGap(39, 39, 39))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel4)
-                                                        .addComponent(jLabel3))
-                                                    .addGap(28, 28, 28)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(identify_tf)
-                                                        .addComponent(corredor_tf)))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
-                                        .addComponent(jLabel6))
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(identify_tf))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(Carros_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Add_bt))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(corredor_tf))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(Type_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(save_bt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(Color_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(largo_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pista_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(68, 68, 68))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(reboot_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(usar_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(112, 112, 112)))))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(pista_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(usar_bt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(largo_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                            .addComponent(reboot_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(37, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(36, 36, 36)
-                    .addComponent(Start_bt)
-                    .addContainerGap(793, Short.MAX_VALUE)))
+                    .addComponent(Start_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(831, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +229,7 @@ public class InterfazCarros extends javax.swing.JFrame {
                     .addComponent(reboot_bt))
                 .addGap(18, 18, 18)
                 .addComponent(save_bt)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(29, 29, 29)
@@ -272,22 +282,33 @@ public class InterfazCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_Add_btActionPerformed
 
     private void usar_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usar_btActionPerformed
-        if(Integer.parseInt(largo_tf.getText())>=0){
+        if (Integer.parseInt(largo_tf.getText()) >= 0) {
             distance = Integer.parseInt(largo_tf.getText());
             pista = pista_tf.getText();
-            pista_lb.setText("Pista: "+pista);
-            largo_lb.setText("Largo: "+distance);
-        }else
+            pista_lb.setText("Pista: " + pista);
+            largo_lb.setText("Largo: " + distance);
+        } else {
             JOptionPane.showMessageDialog(null, "Ingrese un numero mayor a 0");
-        
+        }
+
     }//GEN-LAST:event_usar_btActionPerformed
 
     private void reboot_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reboot_btActionPerformed
-        distance = 0;
-        pista = "";
+        pista = pista_tf.getText();
         pista_lb.setText("Pista: _____");
         largo_lb.setText("Largo: _____");
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+        table.setRowCount(0);
     }//GEN-LAST:event_reboot_btActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void Start_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Start_btActionPerformed
+        progressbar pb = new progressbar();
+        pb.start();
+    }//GEN-LAST:event_Start_btActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -324,31 +345,72 @@ public class InterfazCarros extends javax.swing.JFrame {
             }
         });
     }
-    
-    private  void llenarTable() throws IOException{
-        Autos ats = new Autos();
-        ats.carro.seek(0);
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        if(ats.searchNum(Integer.parseInt(Carros_cb.getSelectedItem().toString()))){
-            int num = ats.carro.readInt();
-            ats.carro.readUTF();
-            String racer = ats.carro.readUTF();
-            ats.carro.skipBytes(12);
-            model.addRow(new Object[]{num,racer,0});
-            jTable1.setModel(model);
-        }
-    }
-    
-    private void llenarComboCox() throws IOException{
+
+    private void llenarComboCox() throws IOException {
         Autos ats = new Autos();
         ats.carro.seek(0);
         Carros_cb.removeAllItems();
-        while(ats.carro.getFilePointer()<ats.carro.length()){
+        while (ats.carro.getFilePointer() < ats.carro.length()) {
             Carros_cb.addItem(String.valueOf(ats.carro.readInt()));
+            ats.carro.readLong();
             ats.carro.readUTF();
             ats.carro.readUTF();
             ats.carro.skipBytes(12);
+        }
+    }
+
+    static boolean ganador = false;
+    static int win = 0;
+
+    private void llenarTable() throws IOException {
+        Autos ats = new Autos();
+        ats.carro.seek(0);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        int id = Integer.parseInt(String.valueOf(Carros_cb.getSelectedItem()));
+        ats.searchNum(id);
+        long dis = ats.carro.readLong();
+        ats.carro.readUTF();
+        String racer = ats.carro.readUTF();
+        model.addRow(new Object[]{id, racer, dis});
+        jTable1.setModel(model);
+
+    }
+
+    class progressbar extends Thread {
+
+        public void reset() {
+            jProgressBar1.setValue(0);
+            jProgressBar1.repaint();
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 50; i++) {
+                if (ganador) {
+                    break;
+                }
+
+                jProgressBar1.setValue(i);
+                jProgressBar1.repaint();
+
+                if (i == distance) {
+                    win = 1;
+                    end(i);
+                }
+
+                try {
+                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
+
+    public synchronized void end(int contar) {
+        if (contar == distance) {
+            ganador = true;
+            JOptionPane.showMessageDialog(null, "El carro: " + win + " gana la carrera");
         }
     }
 
