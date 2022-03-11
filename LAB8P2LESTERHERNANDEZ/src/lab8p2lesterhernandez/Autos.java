@@ -24,7 +24,6 @@ public class Autos {
     public void addCar(int num, String tipo, String corredor, int r, int g, int b) throws IOException {
         carro.seek(carro.length());
         carro.writeInt(num);
-        carro.writeLong(0);
         carro.writeUTF(tipo);
         carro.writeUTF(corredor);
         carro.writeInt(r);
@@ -36,7 +35,6 @@ public class Autos {
         carro.seek(0);
         while(carro.getFilePointer()<carro.length()){
             int num = carro.readInt();
-            carro.readLong();
             carro.readUTF();
             carro.readUTF();
             carro.skipBytes(12);
@@ -51,7 +49,6 @@ public class Autos {
         carro.seek(0);
         while(carro.getFilePointer()<carro.length()){
             carro.readInt();
-            carro.readLong();
             String tipo = carro.readUTF();
             carro.readUTF();
             carro.skipBytes(12);

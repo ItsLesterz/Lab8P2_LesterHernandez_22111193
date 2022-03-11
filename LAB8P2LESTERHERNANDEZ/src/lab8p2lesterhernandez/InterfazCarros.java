@@ -8,16 +8,15 @@ import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
  * @author leste
  */
 public class InterfazCarros extends javax.swing.JFrame {
-    private Color color;
+    private Color col;
     private String pista;
-    private long distancia;
+    private long distance;
     public InterfazCarros() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -67,10 +66,7 @@ public class InterfazCarros extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Identificador", "Corredor", "Distancia"
@@ -117,6 +113,11 @@ public class InterfazCarros extends javax.swing.JFrame {
         });
 
         reboot_bt.setText("Reiniciar");
+        reboot_bt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reboot_btActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,55 +127,61 @@ public class InterfazCarros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(166, 166, 166)
-                        .addComponent(Pause_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
+                        .addComponent(Pause_bt)
+                        .addGap(105, 105, 105)
                         .addComponent(pista_lb)
                         .addGap(81, 81, 81)
                         .addComponent(largo_lb))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(identify_tf))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(Carros_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Add_bt))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(corredor_tf))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(Type_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(save_bt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(Color_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(Carros_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(Add_bt))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(Type_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(50, 50, 50)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(save_bt, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                                        .addComponent(Color_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGap(39, 39, 39))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(jLabel3))
+                                                    .addGap(28, 28, 28)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(identify_tf)
+                                                        .addComponent(corredor_tf)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                                        .addComponent(jLabel6))
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(largo_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pista_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(68, 68, 68))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(pista_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(usar_bt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(largo_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                                            .addComponent(reboot_bt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(reboot_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(usar_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(112, 112, 112)))))))
+                .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(36, 36, 36)
-                    .addComponent(Start_bt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(831, Short.MAX_VALUE)))
+                    .addComponent(Start_bt)
+                    .addContainerGap(793, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +219,7 @@ public class InterfazCarros extends javax.swing.JFrame {
                     .addComponent(reboot_bt))
                 .addGap(18, 18, 18)
                 .addComponent(save_bt)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(29, 29, 29)
@@ -230,9 +237,9 @@ public class InterfazCarros extends javax.swing.JFrame {
             String type = Type_cb.getSelectedItem().toString();
             String racer = corredor_tf.getText();
 
-            int red = color.getRed();
-            int green = color.getGreen();
-            int blue = color.getBlue();
+            int red = col.getRed();
+            int green = col.getGreen();
+            int blue = col.getBlue();
 
             try {
                 if (!ats.searchNum(num)) {
@@ -253,27 +260,34 @@ public class InterfazCarros extends javax.swing.JFrame {
 
     private void Color_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Color_btActionPerformed
         JColorChooser colorChooser = new JColorChooser();
-        color = JColorChooser.showDialog(this, "Escoja un color", Color.white);
-        Color_bt.setBackground(color);
+        col = JColorChooser.showDialog(this, "Escoja un color", Color.white);
+        Color_bt.setBackground(col);
     }//GEN-LAST:event_Color_btActionPerformed
 
     private void Add_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_btActionPerformed
         try {
-            llenarTabla();
+            llenarTable();
         } catch (IOException ex) {
         }
     }//GEN-LAST:event_Add_btActionPerformed
 
     private void usar_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usar_btActionPerformed
         if(Integer.parseInt(largo_tf.getText())>=0){
-            distancia = Integer.parseInt(largo_tf.getText());
+            distance = Integer.parseInt(largo_tf.getText());
             pista = pista_tf.getText();
             pista_lb.setText("Pista: "+pista);
-            largo_lb.setText("Largo: "+distancia);
+            largo_lb.setText("Largo: "+distance);
         }else
             JOptionPane.showMessageDialog(null, "Ingrese un numero mayor a 0");
         
     }//GEN-LAST:event_usar_btActionPerformed
+
+    private void reboot_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reboot_btActionPerformed
+        distance = 0;
+        pista = "";
+        pista_lb.setText("Pista: _____");
+        largo_lb.setText("Largo: _____");
+    }//GEN-LAST:event_reboot_btActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -311,7 +325,20 @@ public class InterfazCarros extends javax.swing.JFrame {
         });
     }
     
-    
+    private  void llenarTable() throws IOException{
+        Autos ats = new Autos();
+        ats.carro.seek(0);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        if(ats.searchNum(Integer.parseInt(Carros_cb.getSelectedItem().toString()))){
+            int num = ats.carro.readInt();
+            ats.carro.readUTF();
+            String racer = ats.carro.readUTF();
+            ats.carro.skipBytes(12);
+            model.addRow(new Object[]{num,racer,0});
+            jTable1.setModel(model);
+        }
+    }
     
     private void llenarComboCox() throws IOException{
         Autos ats = new Autos();
@@ -319,26 +346,9 @@ public class InterfazCarros extends javax.swing.JFrame {
         Carros_cb.removeAllItems();
         while(ats.carro.getFilePointer()<ats.carro.length()){
             Carros_cb.addItem(String.valueOf(ats.carro.readInt()));
-            ats.carro.readLong();
             ats.carro.readUTF();
             ats.carro.readUTF();
             ats.carro.skipBytes(12);
-        }
-    }
-    
-    private  void llenarTabla() throws IOException{
-        Autos ats = new Autos();
-        ats.carro.seek(0);
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        if(ats.searchNum(Carros_cb.getSelectedIndex())){
-            int num = ats.carro.readInt();
-            long dis = ats.carro.readLong();
-            ats.carro.readUTF();
-            String racer = ats.carro.readUTF();
-            ats.carro.skipBytes(12);
-            model.addRow(new Object[]{0,racer,dis});
-            jTable1.setModel(model);
         }
     }
 
